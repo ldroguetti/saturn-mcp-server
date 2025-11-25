@@ -7,6 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# MCP servers communicate via stdio by default, so we don't need to expose ports
-# unless we switch to SSE. For now, we use stdio.
-ENTRYPOINT ["python", "server.py"]
+# Expose port 8000 for SSE
+EXPOSE 8000
+
+# Run with uvicorn for SSE support
+CMD ["uvicorn", "sse:app", "--host", "0.0.0.0", "--port", "8000"]

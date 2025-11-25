@@ -28,27 +28,33 @@ An MCP server to search and read Rocketbot Saturn documentation.
     docker-compose up --build
     ```
 
-## Usage with Claude Desktop
+
+### Dokploy (VPS)
+
+1.  **Create an Application**:
+    *   Log in to your Dokploy dashboard.
+    *   Create a new "Application".
+    *   Name it `saturn-mcp`.
+
+2.  **Source Control**:
+    *   Select "Git".
+    *   Enter your repository URL.
+    *   Select the branch (e.g., `main`).
+
+3.  **Build Settings**:
+    *   **Build Type**: Select `Dockerfile`.
+    *   **Dockerfile Path**: `./Dockerfile`.
+    *   **Context Path**: `./`.
+
+4.  **Deploy**:
+    *   Click "Deploy".
+    *   Dokploy will build the image using the `Dockerfile` and start the service.
+
+## Usage
+
+### 1. Local (Stdio)
 
 Add the following to your `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "saturn": {
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "saturn-mcp"
-      ]
-    }
-  }
-}
-```
-
-Or if running locally without Docker:
 
 ```json
 {
@@ -62,3 +68,23 @@ Or if running locally without Docker:
   }
 }
 ```
+
+### 2. Remote / Docker (SSE)
+
+If you have deployed the server using Docker (e.g., on Dokploy or locally), it exposes an SSE endpoint at `http://<your-server-ip>:8000/sse`.
+
+Add the following to your `claude_desktop_config.json` (or Cursor settings):
+
+```json
+{
+  "mcpServers": {
+    "saturn-remote": {
+      "command": "docker",
+      "args": [],
+      "url": "http://<your-server-ip>:8000/sse"
+    }
+  }
+}
+```
+
+> **Note**: For Cursor, you can add the SSE URL directly in the "MCP Servers" settings.
