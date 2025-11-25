@@ -1,0 +1,9 @@
+services:
+  saturn-mcp:
+    build: .
+    volumes:
+      - .:/app
+    # Keep the container running if needed, or just use it as a command runner.
+    # For MCP stdio, we typically run the container interactively.
+    # However, to keep it up for debugging or SSE:
+    command: tail -f /dev/null
