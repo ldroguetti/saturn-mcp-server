@@ -11,4 +11,4 @@ COPY . .
 EXPOSE 8000
 
 # Run with uvicorn for SSE support
-CMD ["uvicorn", "sse:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "http_server:app", "--host", "0.0.0.0", "--port", "8000"]
